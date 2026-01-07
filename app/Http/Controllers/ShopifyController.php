@@ -12,6 +12,5 @@ class ShopifyController extends Controller
     public function fetchProducts(ShopifyService $shopify)
     {
         $products = $shopify->getProducts(10);
-        dd($products);
     }
 }
