@@ -25,8 +25,10 @@ class ShopifyService
             'limit' => $limit
         ]);
 
-        if ($response->successful()) {
-            return $response->json()['products'];
+        if ($response->failed()) {
+            throw new \Exception('Failed to fetch products from Shopify. Status:' . $response->status());
         }
+
+        return $response->json()['products'];
     }
 }
