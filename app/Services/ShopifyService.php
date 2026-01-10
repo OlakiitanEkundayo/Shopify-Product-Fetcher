@@ -15,7 +15,7 @@ class ShopifyService
         $this->accessToken = config('services.shopify.access_token');
     }
 
-    public function getProducts($limit = 10)
+    public function getProducts($limit = 10, $pageInfo = null)
     {
         /** @var \Illuminate\Http\Client\Response $response */
 
@@ -29,6 +29,13 @@ class ShopifyService
             throw new \Exception('Failed to fetch products from Shopify. Status:' . $response->status());
         }
 
-        return $response->json()['products'];
+        // return $response->json()['products'];
+        return [
+            'products' => $response->json()['products'],
+            'next_page_info' => '...extracted from Link header...',
+            'prev_page_info' => '...extracted from Link header...',
+            'has_next_page' => true / false,
+            'has_prev_page' => true / false
+        ];
     }
 }
