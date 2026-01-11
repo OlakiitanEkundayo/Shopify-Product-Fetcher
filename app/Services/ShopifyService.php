@@ -29,7 +29,7 @@ class ShopifyService
             throw new \Exception('Failed to fetch products from Shopify. Status:' . $response->status());
         }
 
-        // return $response->json()['products'];
+
         return [
             'products' => $response->json()['products'],
             'next_page_info' => '...extracted from Link header...',
