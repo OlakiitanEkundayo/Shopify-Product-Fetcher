@@ -12,7 +12,8 @@ class ShopifyController extends Controller
     public function index(ShopifyService $shopify)
     {
         try {
-            $products = $shopify->getProducts(15);
+            $results = $shopify->getProducts();
+            $products = $results['products'];
 
             return view('products.index', ['products' => $products]);
             // dd($products);
