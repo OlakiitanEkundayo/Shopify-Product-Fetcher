@@ -14,7 +14,7 @@
 
         <div class="mb-8">
             <h1 class="text-3xl font-bold text-gray-800">Shopify Products</h1>
-            <p class="text-gray-600 mt-2">Displaying all products from shopify store</p>
+            <p class="text-gray-600 mt-2">Displaying all products from your store</p>
         </div>
 
         @if (count($products) > 0)
@@ -145,9 +145,66 @@
                 </table>
             </div>
 
-            <!-- Product Count Footer -->
-            <div class="mt-4 text-sm text-gray-600">
-                Showing {{ count($products) }} products
+            <!-- Pagination Container -->
+            <div class="mt-6 flex justify-between items-center">
+
+                <!-- LEFT SIDE: Previous Button -->
+                <div>
+                    <!-- Check if there's a previous page -->
+                    @if ($hasPrevPage)
+                        <!-- Show the Previous button as a clickable link -->
+                        <a href="?page_info={{ $prevPageInfo }}"
+                            class="inline-flex items-center px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-md hover:bg-blue-600 transition-colors duration-150">
+                            <!-- Left arrow icon (SVG) -->
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 19l-7-7 7-7"></path>
+                            </svg>
+                            Previous
+                        </a>
+                    @else
+                        <!-- No previous page - show disabled button -->
+                        <span
+                            class="inline-flex items-center px-4 py-2 bg-gray-300 text-gray-500 text-sm font-medium rounded-md cursor-not-allowed">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 19l-7-7 7-7"></path>
+                            </svg>
+                            Previous
+                        </span>
+                    @endif
+                </div>
+
+                <div class="text-sm text-gray-600">
+                    Showing {{ count($products) }} products
+                </div>
+
+                <div>
+                    <!-- Check if there's a next page -->
+                    @if ($hasNextPage)
+                        <!-- Show the Next button as a clickable link -->
+                        <a href="?page_info={{ $nextPageInfo }}"
+                            class="inline-flex items-center px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-md hover:bg-blue-600 transition-colors duration-150">
+                            Next
+                            <!-- Right arrow icon (SVG) -->
+                            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                                </path>
+                            </svg>
+                        </a>
+                    @else
+                        <!-- No next page - show disabled button -->
+                        <span
+                            class="inline-flex items-center px-4 py-2 bg-gray-300 text-gray-500 text-sm font-medium rounded-md cursor-not-allowed">
+                            Next
+                            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                                </path>
+                            </svg>
+                        </span>
+                    @endif
+                </div>
+
             </div>
         @else
             <!-- No Products Message -->
