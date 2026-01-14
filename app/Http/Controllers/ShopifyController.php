@@ -12,10 +12,23 @@ class ShopifyController extends Controller
     public function index(ShopifyService $shopify)
     {
         try {
-            $results = $shopify->getProducts();
-            $products = $results['products'];
+            $page_Info = request()->query('page_info');
 
-            return view('products.index', ['products' => $products]);
+            $data = $shopify->getProducts(10, $page_Info);
+
+            $products = $data['products'];
+            $nextPageInfo = $data['next_page_info'];
+            $prevPageInfo = $data['prev_page_info'];
+            $hasNextPage = $data['has_next_page'];
+            $hasPrevPage = $data['has_prev_page'];
+
+            return view('products.index', [
+                'products' => $products,
+                'nextPageInfo' => $nextPageInfo,
+                'prevPageInfo' => $prevPageInfo,
+                'hasNextPage' => $hasNextPage,
+                'hasPrevPage' => $hasPrevPage
+            ]);
             // dd($products);
         } catch (\Throwable $e) {
 
