@@ -63,7 +63,7 @@ class ShopifyService
                     }
 
                     // Check if this is the "prev" link
-                    if (strpos($link, 'rel="prev"') !== false) {
+                    if (strpos($link, 'rel="previous"') !== false) {
                         $prevPageInfo = $queryParams['page_info'] ?? null;
                     }
                 }
