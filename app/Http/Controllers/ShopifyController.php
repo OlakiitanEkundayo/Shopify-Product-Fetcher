@@ -29,7 +29,6 @@ class ShopifyController extends Controller
                 'hasNextPage' => $hasNextPage,
                 'hasPrevPage' => $hasPrevPage
             ]);
-            // dd($products);
         } catch (\Throwable $e) {
 
             Log::error("Shopify error: " . $e->getMessage());
