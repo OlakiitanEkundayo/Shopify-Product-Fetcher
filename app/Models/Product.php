@@ -11,8 +11,18 @@ class Product extends Model
         'title',
         'vendor',
         'product_type',
-        'stock_quantity',
+        'price',
         'image_url',
-        'status'
+        'status',
+        'stock_quantity',
+        'raw_data',
+        'synced_at'
+    ];
+
+    protected $casts = [
+        'raw_data' => 'array',
+        'synced_at' => 'datetime',
+        'price' => 'decimal:2',
+        'stock_quantity' => 'integer'
     ];
 }
