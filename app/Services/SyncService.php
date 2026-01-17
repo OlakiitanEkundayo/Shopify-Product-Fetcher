@@ -9,5 +9,9 @@ class SyncService
      */
     public function __construct() {}
 
-    public function syncProducts() {}
+    public function syncProducts()
+    {
+        $pageInfo = null;
+        $totalSynced = 0;
+    }
 }
