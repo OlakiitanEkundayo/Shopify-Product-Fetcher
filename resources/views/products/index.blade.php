@@ -56,9 +56,8 @@
 
                                 <!-- Image Column -->
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    @if (isset($product['image']['src']))
-                                        <img src="{{ $product['image']['src'] }}"
-                                            alt="{{ $product['image']['alt'] ?? $product['title'] }}"
+                                    @if (isset($product->image_url))
+                                        <img src="{{ $product->image_url }}" alt="{{ $product->title }}"
                                             class="h-16 w-16 object-cover rounded-md border border-gray-200">
                                     @else
                                         <div class="h-16 w-16 bg-gray-100 rounded-md flex items-center justify-center">
@@ -70,29 +69,29 @@
                                 <!-- Product Name Column -->
                                 <td class="px-6 py-4">
                                     <div class="text-sm font-medium text-gray-900">
-                                        {{ $product['title'] }}
+                                        {{ $product->title }}
                                     </div>
                                 </td>
 
                                 <!-- Vendor Column -->
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-gray-700">
-                                        {{ $product['vendor'] ?? 'N/A' }}
+                                        {{ $product->vendor ?? 'N/A' }}
                                     </div>
                                 </td>
 
                                 <!-- Product Type Column -->
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-gray-700">
-                                        {{ $product['product_type'] ?? 'Uncategorized' }}
+                                        {{ $product->product_type ?? 'Uncategorized' }}
                                     </div>
                                 </td>
 
                                 <!-- Price Column -->
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm font-semibold text-gray-900">
-                                        @if (isset($product['variants'][0]['price']))
-                                            ${{ number_format($product['variants'][0]['price'], 2) }}
+                                        @if (isset($product->price))
+                                            ${{ number_format($product->price, 2) }}
                                         @else
                                             <span class="text-gray-400">N/A</span>
                                         @endif
@@ -101,11 +100,11 @@
 
                                 <!-- Stock Column -->
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    @if (isset($product['variants'][0]['inventory_quantity']))
-                                        @if ($product['variants'][0]['inventory_quantity'] > 0)
+                                    @if (isset($product->stock_quantity))
+                                        @if ($product->stock_quantity > 0)
                                             <span
                                                 class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                                {{ $product['variants'][0]['inventory_quantity'] }} in stock
+                                                {{ $product->stock_quantity }} in stock
                                             </span>
                                         @else
                                             <span
@@ -120,12 +119,12 @@
 
                                 <!-- Status Column -->
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    @if ($product['status'] === 'active')
+                                    @if ($product->status === 'active')
                                         <span
                                             class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                                             Active
                                         </span>
-                                    @elseif($product['status'] === 'draft')
+                                    @elseif($product->status === 'draft')
                                         <span
                                             class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
                                             Draft
@@ -133,7 +132,7 @@
                                     @else
                                         <span
                                             class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                                            {{ ucfirst($product['status']) }}
+                                            {{ ucfirst($product->status) }}
                                         </span>
                                     @endif
                                 </td>
@@ -146,7 +145,7 @@
             </div>
 
             <!-- Pagination Container -->
-            <div class="mt-6 flex justify-between items-center">
+            {{-- <div class="mt-6 flex justify-between items-center">
 
                 <!-- LEFT SIDE: Previous Button -->
                 <div>
@@ -173,13 +172,15 @@
                             Previous
                         </span>
                     @endif
-                </div>
+                </div> --}}
 
-                <div class="text-sm text-gray-600">
-                    Showing {{ count($products) }} products
-                </div>
+            <div class="text-sm text-gray-600 mt-2">
+                {{-- Showing {{ count($products) }} products --}}
+                {{ $products->links() }}
+            </div>
 
-                <div>
+
+            {{-- <div>
                     <!-- Check if there's a next page -->
                     @if ($hasNextPage)
                         <!-- Show the Next button as a clickable link -->
@@ -203,21 +204,21 @@
                             </svg>
                         </span>
                     @endif
-                </div>
+                </div> --}}
 
-            </div>
-        @else
-            <!-- No Products Message -->
-            <div class="bg-white rounded-lg shadow-md p-8 text-center">
-                <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4">
-                    </path>
-                </svg>
-                <h3 class="mt-2 text-sm font-medium text-gray-900">No products found</h3>
-                <p class="mt-1 text-sm text-gray-500">There are no products available to display.</p>
-            </div>
-        @endif
+    </div>
+@else
+    <!-- No Products Message -->
+    <div class="bg-white rounded-lg shadow-md p-8 text-center">
+        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4">
+            </path>
+        </svg>
+        <h3 class="mt-2 text-sm font-medium text-gray-900">No products found</h3>
+        <p class="mt-1 text-sm text-gray-500">There are no products available to display.</p>
+    </div>
+    @endif
 
     </div>
 </body>
