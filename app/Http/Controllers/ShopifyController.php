@@ -6,29 +6,33 @@ namespace App\Http\Controllers;
 use App\Services\ShopifyService;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use App\Models\Product;
 
 class ShopifyController extends Controller
 {
     public function index(ShopifyService $shopify)
     {
         try {
-            $page_Info = request()->query('page_info');
+            $products = Product::paginate(15);
+            // $page_Info = request()->query('page_info');
 
-            $data = $shopify->getProducts(10, $page_Info);
+            // $data = $shopify->getProducts(10, $page_Info);
 
-            $products = $data['products'];
-            $nextPageInfo = $data['next_page_info'];
-            $prevPageInfo = $data['prev_page_info'];
-            $hasNextPage = $data['has_next_page'];
-            $hasPrevPage = $data['has_prev_page'];
+            // $products = $data['products'];
+            // $nextPageInfo = $data['next_page_info'];
+            // $prevPageInfo = $data['prev_page_info'];
+            // $hasNextPage = $data['has_next_page'];
+            // $hasPrevPage = $data['has_prev_page'];
 
-            return view('products.index', [
-                'products' => $products,
-                'nextPageInfo' => $nextPageInfo,
-                'prevPageInfo' => $prevPageInfo,
-                'hasNextPage' => $hasNextPage,
-                'hasPrevPage' => $hasPrevPage
-            ]);
+            // return view('products.index', [
+            //     'products' => $products,
+            //     'nextPageInfo' => $nextPageInfo,
+            //     'prevPageInfo' => $prevPageInfo,
+            //     'hasNextPage' => $hasNextPage,
+            //     'hasPrevPage' => $hasPrevPage
+            // ]);
+
+            return view('products.index', ['products' => $products]);
         } catch (\Throwable $e) {
 
             Log::error("Shopify error: " . $e->getMessage());
