@@ -5,3 +5,5 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [ShopifyController::class, 'index']);
+
+Route::post('/sync', [ShopifyController::class, 'sync']);
