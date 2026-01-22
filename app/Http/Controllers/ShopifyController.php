@@ -7,6 +7,7 @@ use App\Services\ShopifyService;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use App\Models\Product;
+use App\Services\SyncService;
 
 class ShopifyController extends Controller
 {
@@ -38,6 +39,18 @@ class ShopifyController extends Controller
             Log::error("Shopify error: " . $e->getMessage());
 
             return back()->with('error', 'Unable to fetch products, Please try again  later!');
+        }
+    }
+
+    public function sync(SyncService $sync)
+    {
+        try {
+
+            $count = $sync->syncProducts();
+
+            return redirect('/')->with('success', "{$count} products synced successfully!");
+        } catch (\Exception $e) {
+            return redirect('/')->with('error', 'An error occured:' . $e->getMessage());
         }
     }
 }
