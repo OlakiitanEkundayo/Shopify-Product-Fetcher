@@ -12,10 +12,38 @@
 
     <div class="container mx-auto px-4 py-8">
 
-        <div class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-800">Shopify Products</h1>
-            <p class="text-gray-600 mt-2">Displaying all products from your store</p>
+        @if (session('success'))
+            <div
+                class="alert bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded transition-opacity duration-500 opacity-100">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div
+                class="alert bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded transition-opacity duration-500 opacity-100">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        <div class="flex justify-between items-center mb-8">
+            <div class="mb-8 ">
+                <h1 class="text-3xl font-bold text-gray-800">Shopify Products</h1>
+                <p class="text-gray-600 mt-2">Displaying all products from your store</p>
+            </div>
+
+            <form action="/sync" method="post" class="inline-block">
+                @csrf
+                <button type="submit"
+                    class="px-4 py-2 rounded-md bg-green-600 text-white font-medium
+               hover:bg-green-700 focus:outline-none focus:ring-2
+               focus:ring-green-500 focus:ring-offset-2
+               transition duration-200 ease-in-out shadow-sm">
+                    Sync Products
+                </button>
+            </form>
         </div>
+
 
         @if (count($products) > 0)
 
@@ -151,20 +179,20 @@
                 <div>
                     <!-- Check if there's a previous page -->
                     @if ($hasPrevPage)
-                        <!-- Show the Previous button as a clickable link -->
+                    <!-- Show the Previous button as a clickable link -->
                         <a href="?page_info={{ $prevPageInfo }}"
-                            class="inline-flex items-center px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-md hover:bg-blue-600 transition-colors duration-150">
+                        class="inline-flex items-center px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-md hover:bg-blue-600 transition-colors duration-150">
                             <!-- Left arrow icon (SVG) -->
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M15 19l-7-7 7-7"></path>
+                                d="M15 19l-7-7 7-7"></path>
                             </svg>
                             Previous
                         </a>
                     @else
-                        <!-- No previous page - show disabled button -->
+                    <!-- No previous page - show disabled button -->
                         <span
-                            class="inline-flex items-center px-4 py-2 bg-gray-300 text-gray-500 text-sm font-medium rounded-md cursor-not-allowed">
+                        class="inline-flex items-center px-4 py-2 bg-gray-300 text-gray-500 text-sm font-medium rounded-md cursor-not-allowed">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M15 19l-7-7 7-7"></path>
@@ -178,7 +206,6 @@
                 {{-- Showing {{ count($products) }} products --}}
                 {{ $products->links() }}
             </div>
-
 
             {{-- <div>
                     <!-- Check if there's a next page -->
@@ -221,6 +248,22 @@
     @endif
 
     </div>
+
+    <script>
+        const alerts = document.querySelectorAll('.alert');
+
+        alerts.forEach(alert => {
+            setTimeout(() => {
+
+                alert.classList.remove('opacity-100');
+                alert.classList.add('opacity-0');
+
+                setTimeout(() => {
+                    alert.remove();
+                }, 500);
+            }, 5000);
+        });
+    </script>
 </body>
 
 </html>
