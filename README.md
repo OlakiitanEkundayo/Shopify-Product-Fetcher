@@ -1,132 +1,117 @@
 # Shopify Product Fetcher
 
-Laravel application that integrates with Shopify's Admin API to fetch and manage product data.
+Most Shopify stores don’t actually **own their product data**.
 
-## Overview
+As stores grow, product information ends up:
 
-This project demonstrates a clean implementation of Shopify API integration in Laravel, focusing on secure authentication, data retrieval, and the foundation for real-time inventory automation.
+- Locked inside Shopify
+- Scattered across apps
+- Difficult to audit, sync, or automate
 
-Built to solve a common pain point: online stores waste 10-20 hours weekly manually managing product data across platforms. This fetcher automates that first step.
+This becomes a serious problem when stores want to:
 
-## Current Implementation
+- Automate backend workflows
+- Sync products across systems
+- Prevent costly inventory errors
+- Reduce manual data handling
 
-**Core functionality:**
+This project demonstrates a **standalone backend system** that pulls clean product data directly from Shopify, without relying on third-party apps.
 
--   Shopify Admin API authentication via custom app tokens
--   Product data retrieval (titles, prices, variants, inventory)
--   Environment-based configuration for secure credential management
+It represents the **foundational layer** required for reliable eCommerce backend automation.
 
-**In development:**
+---
 
--   Database persistence layer for product storage
--   Webhook integration for real-time updates
--   Background job processing for scheduled syncs
+## The Problem This Solves
 
-## Technical Stack
+Growing Shopify stores often rely on apps for product syncing and backend workflows.
 
--   **Backend:** Laravel 12.x, PHP 8.2+
--   **API:** Shopify Admin REST API (2026-01)
--   **Database:** MySQL
--   **HTTP Client:** Laravel's built-in HTTP facade
+At scale, this leads to:
 
-## Setup
+- Data inconsistencies
+- Broken syncs
+- Manual checks
+- Increased operational risk
 
-**Prerequisites:**
+Without direct access to product data, automation becomes fragile or impossible.
 
--   PHP 8.2+
--   Composer
--   MySQL
--   Shopify Partner account with development store
+---
 
-**Installation:**
+## What This System Does
 
-```bash
-git clone https://github.com/OlakiitanEkundayo/Shopify-Product-Fetcher.git
-cd shopify-product-fetcher
-composer install
-cp .env.example .env
-php artisan key:generate
-```
+- Connects directly to the Shopify Admin API
+- Fetches complete product and variant data
+- Provides a clean, controlled data source outside Shopify
+- Removes dependency on app-based data access
 
-**Configuration:**
+This system is intentionally minimal and focused, designed to be extended into higher-value automation use cases.
 
-Add your Shopify credentials to `.env`:
+---
 
-```env
-SHOPIFY_DOMAIN=your-store.myshopify.com
-SHOPIFY_ACCESS_TOKEN=shpat_your_access_token
-SHOPIFY_API_VERSION=2026-01
+## Why This Matters
 
-DB_DATABASE=shopify_fetcher
-DB_USERNAME=your_username
-DB_PASSWORD=your_password
-```
+Direct access to product data is the starting point for:
 
-**Database:**
+- Inventory monitoring and alerts
+- Overselling prevention
+- Multi-store or multi-channel sync
+- Custom backend automation
 
-```bash
-php artisan migrate
-```
+Most costly backend problems start **before** inventory breaks — at the data access level.
 
-**Run:**
+---
 
-```bash
-php artisan serve
-```
+## Current Scope
 
-Visit `http://localhost:8000` to test the integration.
+**Implemented:**
 
-## API Integration Architecture
+- Secure Shopify Admin API authentication
+- Product and variant data retrieval
+- Environment-based credential management
 
-**Authentication:**
+**Planned Extensions (separate systems):**
 
--   Uses Shopify Custom App access tokens
--   Credentials stored securely in environment variables
--   Token passed via HTTP headers for API requests
+- Inventory change monitoring
+- Alerting and notification workflows
+- Background processing and automation
+- Multi-system data synchronization
 
-**Data Flow:**
-
-1. Laravel HTTP client makes authenticated request to Shopify
-2. API returns product data in JSON format
-3. Application processes and displays/stores data
-4. (Future) Webhooks push real-time updates to Laravel endpoint
-
-## Roadmap
-
-**Phase 1:** Basic product fetch and display ✓ (in progress)  
-**Phase 2:** Database persistence with Eloquent models  
-**Phase 3:** Webhook receiver for inventory updates  
-**Phase 4:** Background job processing for scheduled syncs  
-**Phase 5:** Low-stock alert system
+---
 
 ## Use Cases
 
-This integration serves as the foundation for:
+This backend system is relevant for:
 
--   Multi-channel inventory synchronization
--   Automated stock level monitoring
--   Custom product data dashboards
--   Elimination of manual export/import workflows
+- Shopify stores scaling past early-stage operations
+- Stores losing time to manual backend tasks
+- Businesses needing automation beyond standard apps
 
-Target audience: eCommerce stores doing $200k-$5M annually that need custom automation beyond what Shopify apps provide.
+Typical target:
+eCommerce stores doing **$200k–$5M+ annually** with increasing backend complexity.
+
+---
+
+## Technical Overview
+
+- Backend: Laravel (PHP)
+- API: Shopify Admin REST API
+- Database: MySQL
+- Authentication: Shopify Custom App tokens
+
+The technical stack is intentionally kept simple and stable to support long-term automation systems.
+
+---
 
 ## Project Context
 
-Part of my backend automation work focused on eCommerce operations. This represents the foundational API integration layer that powers more complex automation systems.
+This project is part of a broader focus on **backend automation for eCommerce operations**.
 
-Tech skills demonstrated:
+It is designed as infrastructure, not a standalone product, the kind of system that enables reliable automation and operational stability.
 
--   RESTful API consumption
--   Secure credential management
--   HTTP client implementation
--   Environment-based configuration
--   Laravel routing and controllers
-
-## Resources
-
--   [Shopify Admin API Documentation](https://shopify.dev/docs/api/admin-rest)
--   [Laravel HTTP Client Documentation](https://laravel.com/docs/http-client)
+---
 
 ## Contact
 
-Building backend automation for eCommerce. Connect on [LinkedIn](https://www.linkedin.com/in/olakiitan-ekundayo-983124244/).
+Building backend automation systems for Shopify stores focused on reducing manual work and preventing costly backend issues.
+
+Connect on LinkedIn:
+https://www.linkedin.com/in/olakiitan-ekundayo
